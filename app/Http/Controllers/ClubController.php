@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Club;
 use App\Http\Requests\StoreClubRequest;
 use App\Http\Requests\UpdateClubRequest;
+use Illuminate\Support\Facades\DB;
 
 class ClubController extends Controller
 {
@@ -13,7 +14,7 @@ class ClubController extends Controller
      */
     public function index()
     {
-        return view (Clubs.index);
+        return view ('Clubs.index');
     }
 
     /**
@@ -21,15 +22,20 @@ class ClubController extends Controller
      */
     public function create()
     {
-        //
+        return view('Clubs.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreClubRequest $request)
-    {
-        //
+    public function store(StoreClubRequest $request){
+   
+        $request->validate(['name' => 'required|max:255']);
+    
+        DB::table('Clubs')->insert([
+            'name' => $request->name,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return back()->with('success', 'Club berhasil ditambahkan');
     }
 
     /**

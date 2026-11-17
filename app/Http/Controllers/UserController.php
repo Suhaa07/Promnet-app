@@ -13,7 +13,7 @@ class UserController extends Controller
 
     public function show(string $id): View
     {
-        return view('user.profile', [
+        return view('User.profile', [
             'user' => User::findOrFail($id)
         ]);
     }
